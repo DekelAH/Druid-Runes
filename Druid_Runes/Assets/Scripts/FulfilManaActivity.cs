@@ -7,11 +7,9 @@ namespace Assets.Scripts
     {
         #region Methods
 
-        public void Begin()
+        public void BeginManaFulfilment(float delay, float manaToGive)
         {
             var playerModel = PlayerModelProvider.Instance.GetPlayerModel;
-            float delay = 3f;
-            float manaToGive = 15f;
             TimePulseService.PulseEvery(delay, () => playerModel.AddMana(manaToGive));
         }
 

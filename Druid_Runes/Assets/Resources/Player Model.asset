@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Player Model
   m_EditorClassIdentifier: 
   _manaAmount: 50
+  _healthAmount: 22

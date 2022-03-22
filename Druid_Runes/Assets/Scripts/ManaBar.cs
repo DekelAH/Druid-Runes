@@ -13,6 +13,15 @@ namespace Runes
 
         [SerializeField]
         private Image _manaFillImage;
+
+        [SerializeField]
+        private float _manaToGive;
+
+        [SerializeField]
+        private float _giveManaDelay;
+
+        [SerializeField]
+        private Text _manaAmountText;
         
         #endregion
 
@@ -20,14 +29,34 @@ namespace Runes
 
         private float _currentManaAmount;
 
+        // I'm not sure if its the right place to call this method because FulfilManaActivity class isn't MonoBehaviour, i chose to call it here because its mana related
+        private readonly FulfilManaActivity _ffma = new FulfilManaActivity();
+
         #endregion
 
-        #region Functions
+        #region Methods
+
+        private void Start()
+        {
+            UpdateManaBar();
+            _ffma.BeginManaFulfilment(_giveManaDelay, _manaToGive);
+        }
 
         private void Update()
         {
-            UpdateManaBar();
             InitialBarValue();
+            UpdateManaText();
+        }
+        private void OnDestroy()
+        {
+            var playerModel = SetPlayerModel();
+            playerModel.ManaAmountChange -= AddManaAmount;
+            playerModel.ManaAmountChange -= TakeManaAmount;
+        }
+
+        private void UpdateManaText()
+        {
+            _manaAmountText.text = $"{_currentManaAmount} / 100";
         }
 
         private void InitialBarValue()
@@ -36,13 +65,6 @@ namespace Runes
             _currentManaAmount = playerModel.ManaAmount;
 
             _manaFillImage.fillAmount = _currentManaAmount / 100;
-        }
-
-        private void OnDestroy()
-        {
-            var playerModel = SetPlayerModel();
-            playerModel.ManaAmountChange -= AddManaAmount;
-            playerModel.ManaAmountChange -= TakeManaAmount;
         }
 
         private void AddManaAmount(float manaAmount)

@@ -1,28 +1,37 @@
-﻿using System;
+﻿using Assets.Scripts.Infastructure;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Runes
+namespace Assets.Scripts.Runes
 {
-    public class DruidRunePainter : MonoBehaviour
+    public abstract class RuneBase : MonoBehaviour
     {
+        #region Events
+
+        public event Action<bool> BeginDraw;
+        public event Action<bool> EndDraw;
+
+        #endregion
+
         #region Editor
 
         [SerializeField]
-        private Transform[] _runeDrawPoints;
+        protected Transform[] _runeDrawPoints;
 
         [SerializeField]
-        private Transform _runeBrush;
+        protected Transform _runeBrush;
 
         [SerializeField]
-        private float _moveSpeed = 0.1f;
+        protected float _moveSpeed;
 
         #endregion
 
         #region Fields
 
-        private readonly Stack<Vector3> _runeDrawingPath = new Stack<Vector3>();
+        protected readonly Stack<Vector3> _runeDrawingPath = new Stack<Vector3>();
+        private bool _isDrawing;
 
         #endregion
 
@@ -35,7 +44,7 @@ namespace Runes
             DrawRuneInternal();
         }
 
-        private void DrawRuneInternal()
+        public void DrawRuneInternal()
         {
             if (_runeDrawingPath.Count > 0)
             {
@@ -43,13 +52,12 @@ namespace Runes
                 var nextPoint = _runeDrawingPath.Pop();
                 StartCoroutine(PaintLine(_runeBrush, fromPoint, nextPoint, _moveSpeed, DrawRuneInternal));
             }
-            else
-            {
 
-            }
+            _isDrawing = false;
+            EndDraw?.Invoke(_isDrawing);
         }
 
-        private void GenerateRunePath()
+        public void GenerateRunePath()
         {
             _runeDrawingPath.Clear();
 
@@ -59,7 +67,7 @@ namespace Runes
             }
         }
 
-        private IEnumerator PaintLine(Transform objectToMove, Vector3 fromPoint, Vector3 toPoint, float inTime, Action endCallback)
+        public IEnumerator PaintLine(Transform objectToMove, Vector3 fromPoint, Vector3 toPoint, float inTime, Action endCallback)
         {
             var accTime = 0f;
             var moveFactor = 0f;
@@ -69,6 +77,8 @@ namespace Runes
                 objectToMove.position = Vector3.Lerp(fromPoint, toPoint, moveFactor);
                 moveFactor = accTime / inTime;
                 accTime += Time.deltaTime;
+                _isDrawing = true;
+                BeginDraw?.Invoke(_isDrawing);
 
                 yield return null;
 
