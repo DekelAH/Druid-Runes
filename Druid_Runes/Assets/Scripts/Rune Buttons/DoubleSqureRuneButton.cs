@@ -19,7 +19,7 @@ namespace Assets.Scripts.Rune_Buttons
 
         public override void OnClick()
         {
-            var playerModel = PlayerModelProvider.Instance.GetPlayerModel;
+            var playerModel = PlayerModelProvider.Instance.CurrentSaveOption;
 
             if (!_isDrawing)
             {

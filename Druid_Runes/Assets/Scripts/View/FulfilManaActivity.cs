@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Infastructure;
-using System.Collections;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.View
 {
     public class FulfilManaActivity
     {
@@ -9,7 +8,7 @@ namespace Assets.Scripts
 
         public void BeginManaFulfilment(float delay, float manaToGive)
         {
-            var playerModel = PlayerModelProvider.Instance.GetPlayerModel;
+            var playerModel = PlayerModelProvider.Instance.CurrentSaveOption;
             TimePulseService.PulseEvery(delay, () => playerModel.AddMana(manaToGive));
         }
 

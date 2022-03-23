@@ -3,7 +3,7 @@ using Assets.Scripts.Models;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.View
 {
     public class HealthBar : MonoBehaviour
     {
@@ -74,7 +74,7 @@ namespace Assets.Scripts
 
         private PlayerModel SetPlayerModel()
         {
-            var playerModel = PlayerModelProvider.Instance.GetPlayerModel;
+            var playerModel = PlayerModelProvider.Instance.CurrentSaveOption;
             return playerModel;
         }
 

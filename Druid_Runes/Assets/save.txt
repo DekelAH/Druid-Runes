@@ -1,0 +1,1 @@
+{"_manaAmount":40.0,"_healthAmount":40.0}

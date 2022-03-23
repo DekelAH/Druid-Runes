@@ -17,7 +17,7 @@ namespace Assets.Scripts.Rune_Buttons
         public override void OnClick()
         {
             base.OnClick();
-            var playerModel = PlayerModelProvider.Instance.GetPlayerModel;
+            var playerModel = PlayerModelProvider.Instance.CurrentSaveOption;
             playerModel.TakeHealth(_takeHealth);
         }
 

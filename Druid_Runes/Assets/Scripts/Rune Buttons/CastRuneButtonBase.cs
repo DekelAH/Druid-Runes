@@ -43,7 +43,7 @@ namespace Assets.Scripts.Rune_Buttons
 
         public virtual void OnClick()
         {
-            var playerModel = PlayerModelProvider.Instance.GetPlayerModel;
+            var playerModel = PlayerModelProvider.Instance.CurrentSaveOption;
 
             if (!_isDrawing)
             {

@@ -23,7 +23,19 @@ namespace Assets.Scripts.Models
 
         #endregion
 
+        #region Fields
+
+        private string _modelName = "";
+
+        #endregion
+
         #region Methods
+
+        public void Initialize(float health, float mana)
+        {
+            _healthAmount = health;
+            _manaAmount = mana;
+        }
 
         public void AddHealth(float healthToAdd)
         {
@@ -49,12 +61,18 @@ namespace Assets.Scripts.Models
             ManaAmountChange?.Invoke(_manaAmount);
         }
 
+        public string SetModelName(string modelName)
+        {
+            return _modelName = modelName;
+        }
+
         #endregion
 
         #region Properties
 
         public float ManaAmount => _manaAmount;
         public float HealthAmount => _healthAmount;
+        public string ModelName => _modelName;
 
         #endregion
 

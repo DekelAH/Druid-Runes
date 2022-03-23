@@ -1,11 +1,9 @@
-﻿using Assets.Scripts;
-using Assets.Scripts.Infastructure;
+﻿using Assets.Scripts.Infastructure;
 using Assets.Scripts.Models;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Runes
+namespace Assets.Scripts.View
 {
     public class ManaBar : MonoBehaviour
     {
@@ -86,7 +84,7 @@ namespace Runes
 
         private PlayerModel SetPlayerModel()
         {
-            var playerModel = PlayerModelProvider.Instance.GetPlayerModel;
+            var playerModel = PlayerModelProvider.Instance.CurrentSaveOption;
             return playerModel;
         }
 
